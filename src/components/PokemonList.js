@@ -11,15 +11,21 @@ const PokemonsList = () => {
   
 
   const removePokemonFromList = (rmPokemon) => {
-    pokemons.filter(p => p!==rmPokemon)
+    return pokemons.filter(p => p.name!==rmPokemon.name)
+    
   }
 
   const capture = (pokemon) => {
-    setCapturedPokemons([...capturedPokemons,pokemon])
-    setPokemons(removePokemonFromList(pokemon))
+    if(!capturedPokemons) {
+      setCapturedPokemons([pokemon])
+      setPokemons(removePokemonFromList(pokemon))
+    } else {
+      setCapturedPokemons([...capturedPokemons,pokemon])
+      setPokemons(removePokemonFromList(pokemon))  
+    }
+    
   }
-  console.log(pokemons)
-
+    
     return (
       <div className="pokemons-list">
         <h2>Pokemons List</h2>
@@ -28,7 +34,7 @@ const PokemonsList = () => {
           <div key={`${pokemon.id}-${pokemon.name}`}>
             <p>{pokemon.id}</p>
             <p>{pokemon.name}</p>
-            <button onClick={() => capture(pokemon)}>+</button>
+            <button onClick={() => capture(pokemon)}>capture me</button>
           </div>)}
       </div>
     )
